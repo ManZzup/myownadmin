@@ -14,9 +14,13 @@ NO, this doesn't provide any kinda service or feature of a standard CMS
 **Then what does it give?**
 
 It gives a higly customizable class which can change its form dynamically to represent any object you need
-ex: It can represent a Post in your page
-    Better; it can represent Page in your site
-    Even better; it can represent your SITE !!
+
+ex: 
+It can represent a Post in your page
+    
+Better; it can represent Page in your site
+    
+Even better; it can represent your SITE !!
     
 Yet, all of them are optional, you can control its behaviour 100%
 
