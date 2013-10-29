@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>my own Admin by ManZzup</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>my own Admin</h1>
+          <h2>php,cms</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ManZzup/myownadmin/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ManZzup/myownadmin/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ManZzup/myownadmin" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="my-own-admin" class="anchor" href="#my-own-admin"><span class="octicon octicon-link"></span></a>my own Admin</h1>
+
+<p><strong>What is my own Admin (moA) ?</strong></p>
+
+<p>A highly portable, simplified content administration system. It's like a super tiny Content Management System (CMS) yet
+intergrated seperately from your primary application / website</p>
+
+<p><strong>So this is another CMS?</strong></p>
+
+<p>NO, this doesn't provide any kinda service or feature of a standard CMS</p>
+
+<p><strong>Then what does it give?</strong></p>
+
+<p>It gives a higly customizable class which can change its form dynamically to represent any object you need</p>
+
+<p>ex: 
+It can represent a Post in your page</p>
+
+<p>Better; it can represent Page in your site</p>
+
+<p>Even better; it can represent your SITE !!</p>
+
+<p>Yet, all of them are optional, you can control its behaviour 100%</p>
+
+<p><strong>What are the mandatory files for the system?</strong></p>
+
+<p>Only moa.php and config.php</p>
+
+<p><strong>How to use those?</strong></p>
+
+<p>Let's start</p>
+
+<h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<ol>
+<li> Download all above files</li>
+<li> post.php is a script written to give a moA object a 'Post' like behaviour. It means once you include the post.php,
+you can easily add, delete, update or retrieve Posts from your database.</li>
+<li> Post is only a moO (my own Object) that can be adapted dynamically to represent many real world application such as post in a site, a web page, a user etc.</li>
+<li> Change the config.php variables to suit your database requirement</li>
+</ol><p>NOTE: you can also replace the query methods in the file since all the queries done by moA objects process through them :) &lt;- PORTABILITY</p>
+
+<h2>
+<a name="moa-classes" class="anchor" href="#moa-classes"><span class="octicon octicon-link"></span></a>moA classes</h2>
+
+<p>moA (my own Admin) class  : the main system where all action happens
+moO (my own Object) class : an abstract class which can represent anything, this is used to keep track of objects by moA </p>
+
+<h2>
+<a name="moa-default-methods" class="anchor" href="#moa-default-methods"><span class="octicon octicon-link"></span></a>moA default methods</h2>
+
+<p><strong>constructor($table,$cfg,$primary)</strong></p>
+
+<pre>
+$table  : the name of the table to which record manipulation should be done
+
+$cfg    : an array resenting the class variables =&gt; table fields
+      ex: 
+      Let's assume our table structure to be
+</pre>
+      
+
+<pre><code>      +--------+-----------+------+-----+-------------------+----------------+
+        | Field  | Type      | Null | Key | Default           | Extra          |
+        +--------+-----------+------+-----+-------------------+----------------+
+        | ID     | int(11)   | NO   | PRI | NULL              | auto_increment |
+        | Title  | longtext  | NO   |     | NULL              |                |
+        | Post   | longtext  | NO   |     | NULL              |                |
+        | Parent | int(11)   | NO   |     | NULL              |                |
+        | Dtime  | timestamp | NO   |     | CURRENT_TIMESTAMP |                |
+        +--------+-----------+------+-----+-------------------+----------------+
+</code></pre>
+
+<p>our config can be defined as </p>
+
+<div class="highlight highlight-php"><pre>    <span class="nv">$cfg</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">'pid'</span> <span class="o">=&gt;</span> <span class="s1">'ID'</span><span class="p">,</span>
+                <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'Title'</span><span class="p">,</span>
+                <span class="s1">'post'</span> <span class="o">=&gt;</span> <span class="s1">'Post'</span><span class="p">,</span>
+                <span class="s1">'parent'</span> <span class="o">=&gt;</span> <span class="s1">'Parent'</span><span class="p">,</span>
+                <span class="s1">'dtime'</span> <span class="o">=&gt;</span>  <span class="s1">'Dtime'</span>        
+            <span class="p">);</span>
+</pre></div>
+
+<pre>            
+NOTE: Array keys are what you would like to call them in an object. You are free to relace them but array values should be exactly matching to those field of the given table
+like $post-&gt;title, $post-&gt;pid
+
+$primary : primary key of the table, this will be the unique identification of the object
+</pre>
+
+<p><strong>init($params)</strong></p>
+
+<pre>
+Method that would put actual values to the instance properties of moO
+
+$params : array consisting of the keys defined in $cfg as keys and the values to put in table as values of the array
+      ex: we can initialize a demo post as
+</pre>
+
+<div class="highlight highlight-php"><pre>      <span class="nv">$params</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">'title'</span> <span class="o">=&gt;</span> <span class="s1">'My new Title'</span><span class="p">,</span>
+                <span class="s1">'post'</span> <span class="o">=&gt;</span> <span class="s1">'These are the post content'</span><span class="p">,</span>
+                <span class="s1">'parent'</span> <span class="o">=&gt;</span> <span class="s1">'0'</span>        
+            <span class="p">);</span>
+</pre></div>
+
+<pre><code>        NOTE: you can leave out any field that you donot want to initialize like ID, Date
+</code></pre>
+
+<p><strong>add($moo)</strong></p>
+
+<pre>
+Add a record to the table correspoding to the given moO object
+
+$moo    : moO Object
+</pre>
+
+<p><strong>getAll()</strong></p>
+
+<pre>
+Return an array of moO objects corresponding to all the records in the table
+</pre>
+
+<p><strong>getByField($field,$value)</strong></p>
+
+<pre>
+Return an array of moO objects [or a single moO object is only 1 record is found]
+
+$field  : table field to match a property
+$value  : value to be matched
+</pre>
+
+<p><strong>delete($moo)</strong></p>
+
+<pre>
+Delete the table record corresponding to the given $moo object
+
+$moo    : moO Object
+</pre>
+
+<p><strong>deleteByField($field,$value)</strong></p>
+
+<pre>
+Delete all the table records corresponding to the given field/value pair
+</pre>
+
+<p><strong>update($moo)</strong></p>
+
+<pre>
+Update the record corresponding to the $moo objects with the changed values
+
+$moo    : moO Object
+</pre>
+        </section>
+
+        <footer>
+          my own Admin is maintained by <a href="https://github.com/ManZzup">ManZzup</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
